@@ -6,8 +6,9 @@ $(document).ready(function () {
   currentDay.text(today);
 
   var workHours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
+  var sessionStorage = [];
 
-// Need to use work
+// Needed to use work. Loop through an 
   workHours.forEach(function (hours) {
       console.log(hours);
     var row = $("<div>");
@@ -39,6 +40,8 @@ $(document).ready(function () {
 
 
 //======== Start of Conditionals and Functions to be called on ========================
+    
+    // Sets the class
     if (hours < moment().hour()) {
         todoBlock.addClass("past");
     } else if (hours == moment().hour()) {
@@ -47,13 +50,25 @@ $(document).ready(function () {
         todoBlock.addClass("future");
     }
 
+    var localStorageGrab =  JSON.parse(localStorage.getItem("workTODO"));
+
+    // if (localStorageGrab != sessionStorage) {
+    //     sessionStorage = localStorageGrab;
+    //     if (sessionStorage.filter() == slotHour) {
+    //         console.log(slotHour);
+    //     }
+    // }
+
+    // Takes data and pushes it into sessionStorage and localStorage
     saveBtn.on("click", function () {
         var getTODO = {
             time: $(this).siblings("div").text(),
             todo: $(this).siblings("textarea").val()
         };
         console.log(getTODO);
-    })
+        sessionStorage.push(getTODO);
+        localStorage.setItem("workTODO", JSON.stringify(sessionStorage));
+    });
 
 //======= Appending Items to the div with the container class =========================
     calender.append(row);
