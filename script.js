@@ -29,7 +29,7 @@ $(document).ready(function () {
 //=====================================================================================
     hourBlock.text(slotHour);
     hourBlock.addClass("col-2 time-block hour");
-    todoBlock.text("Enter what you plan to do here");
+    todoBlock.attr("placeholder", "Enter what you plan to do here");
     todoBlock.addClass("col-9 row text-column description");
     saveBtn.attr("type", "submit");
     saveBtn.attr("value", hours);
@@ -47,7 +47,13 @@ $(document).ready(function () {
         todoBlock.addClass("future");
     }
 
-
+    saveBtn.on("click", function () {
+        var getTODO = {
+            time: $(this).siblings("div").text(),
+            todo: $(this).siblings("textarea").val()
+        };
+        console.log(getTODO);
+    })
 
 //======= Appending Items to the div with the container class =========================
     calender.append(row);
