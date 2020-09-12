@@ -50,14 +50,19 @@ $(document).ready(function () {
         todoBlock.addClass("future");
     }
 
+    // Setting variables to call into the function bello
     var localStorageGrab =  JSON.parse(localStorage.getItem("workTODO"));
+    var sessionStorageCheck = sessionStorage.filter(todo => todo.time === slotHour);
 
-    // if (localStorageGrab != sessionStorage) {
-    //     sessionStorage = localStorageGrab;
-    //     if (sessionStorage.filter() == slotHour) {
-    //         console.log(slotHour);
-    //     }
-    // }
+    console.log(sessionStorageCheck);
+    // Check if localStorage and sessionStorage are the same
+    if (localStorageGrab != sessionStorage) {
+        sessionStorage = localStorageGrab;
+        if (sessionStorageCheck.length > 0) {
+            console.log("Item found in local storage");
+            todoBlock.val(sessionStorageCheck[0].todo);
+        }
+    }
 
     // Takes data and pushes it into sessionStorage and localStorage
     saveBtn.on("click", function () {
