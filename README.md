@@ -8,7 +8,7 @@ A work day planner for those who need that sort of thing.
 
 ## Where to access
 
-If you need your work day planned out come here: [Work Day Planner](https://mbpjason.github.io/128-Character-Password-Generator/)
+If you need your work day planned out come here: [Work Day Planner](https://mbpjason.github.io/Busy-Work-Scheduler/)
 
 ## How to use
 
