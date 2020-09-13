@@ -56,12 +56,10 @@ $(document).ready(function () {
       (todo) => todo.time === slotHour
     );
 
-    console.log(sessionStorageCheck);
     // Check if localStorage and sessionStorage are the same
     if (localStorageGrab != sessionStorage) {
       sessionStorage = localStorageGrab;
       if (sessionStorageCheck.length > 0) {
-        console.log("Item found in local storage");
         todoBlock.val(sessionStorageCheck[0].todo);
       }
     }
@@ -72,7 +70,6 @@ $(document).ready(function () {
         time: $(this).siblings("div").text(),
         todo: $(this).siblings("textarea").val(),
       };
-      console.log(getTODO);
       sessionStorage.push(getTODO);
       localStorage.setItem("workTODO", JSON.stringify(sessionStorage));
     });
