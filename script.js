@@ -8,26 +8,27 @@ $(document).ready(function () {
   var workHours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
   var sessionStorage = [];
 
-// Needed to use work. Loop through an 
+  // Needed to use work. Loop through an
   workHours.forEach(function (hours) {
-      console.log(hours);
+    console.log(hours);
     var row = $("<div>");
     var hourBlock = $("<div>");
     var todoBlock = $("<textarea>");
     var saveBtn = $("<button>");
-    var slotHour
+    var saveIcon = $("<span>");
+    var slotHour;
 
- // Generating items "hard coded" 
+    // Generating items "hard coded"
     row.addClass("row");
-//======= This needs to be ahead so hourBlock can read the value correctly=============
+    //======= This needs to be ahead so hourBlock can read the value correctly=============
     if (hours <= 11) {
-        slotHour = hours + "AM";
+      slotHour = hours + "AM";
     } else if (hours == 12) {
-        slotHour = hours + "PM";
+      slotHour = hours + "PM";
     } else {
-        slotHour = (hours - 12) + "PM";
+      slotHour = hours - 12 + "PM";
     }
-//=====================================================================================
+    //=====================================================================================
     hourBlock.text(slotHour);
     hourBlock.addClass("col-2 time-block hour");
     todoBlock.attr("placeholder", "Enter what you plan to do here");
@@ -35,53 +36,52 @@ $(document).ready(function () {
     saveBtn.attr("type", "submit");
     saveBtn.attr("value", hours);
     saveBtn.addClass("saveBtn col-1");
-//======== End of "hard coded" items ==================================================
+    saveIcon.addClass("fas fa-save");
+    //======== End of "hard coded" items ==================================================
 
+    //======== Start of Conditionals and Functions to be called on ========================
 
-
-//======== Start of Conditionals and Functions to be called on ========================
-    
     // Sets the class
     if (hours < moment().hour()) {
-        todoBlock.addClass("past");
+      todoBlock.addClass("past");
     } else if (hours == moment().hour()) {
-        todoBlock.addClass("present");
+      todoBlock.addClass("present");
     } else {
-        todoBlock.addClass("future");
+      todoBlock.addClass("future");
     }
 
     // Setting variables to call into the function bello
-    var localStorageGrab =  JSON.parse(localStorage.getItem("workTODO"));
-    var sessionStorageCheck = sessionStorage.filter(todo => todo.time === slotHour);
+    var localStorageGrab = JSON.parse(localStorage.getItem("workTODO"));
+    var sessionStorageCheck = sessionStorage.filter(
+      (todo) => todo.time === slotHour
+    );
 
     console.log(sessionStorageCheck);
     // Check if localStorage and sessionStorage are the same
     if (localStorageGrab != sessionStorage) {
-        sessionStorage = localStorageGrab;
-        if (sessionStorageCheck.length > 0) {
-            console.log("Item found in local storage");
-            todoBlock.val(sessionStorageCheck[0].todo);
-        }
+      sessionStorage = localStorageGrab;
+      if (sessionStorageCheck.length > 0) {
+        console.log("Item found in local storage");
+        todoBlock.val(sessionStorageCheck[0].todo);
+      }
     }
 
     // Takes data and pushes it into sessionStorage and localStorage
     saveBtn.on("click", function () {
-        var getTODO = {
-            time: $(this).siblings("div").text(),
-            todo: $(this).siblings("textarea").val()
-        };
-        console.log(getTODO);
-        sessionStorage.push(getTODO);
-        localStorage.setItem("workTODO", JSON.stringify(sessionStorage));
+      var getTODO = {
+        time: $(this).siblings("div").text(),
+        todo: $(this).siblings("textarea").val(),
+      };
+      console.log(getTODO);
+      sessionStorage.push(getTODO);
+      localStorage.setItem("workTODO", JSON.stringify(sessionStorage));
     });
 
-//======= Appending Items to the div with the container class =========================
+    //======= Appending Items to the div with the container class =========================
     calender.append(row);
     row.append(hourBlock);
     row.append(todoBlock);
     row.append(saveBtn);
-
-
-    
+    saveBtn.append(saveIcon);
   });
 });
