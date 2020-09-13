@@ -6,7 +6,7 @@ $(document).ready(function () {
   currentDay.text(today);
 
   var workHours = ["9", "10", "11", "12", "13", "14", "15", "16", "17"];
-  var sessionStorage = [];
+  var sessionStorage = JSON.parse(localStorage.getItem("workTODO")) || [];
 
   // Needed to use work. Loop through an
   workHours.forEach(function (hours) {
@@ -51,17 +51,11 @@ $(document).ready(function () {
     }
 
     // Setting variables to call into the function below
-    var localStorageGrab = JSON.parse(localStorage.getItem("workTODO"));
     var sessionStorageCheck = sessionStorage.filter(
       (todo) => todo.time === slotHour
     );
-
-    // Check if localStorage and sessionStorage are the same
-    if (localStorageGrab != sessionStorage) {
-      sessionStorage = localStorageGrab;
-      if (sessionStorageCheck.length > 0) {
-        todoBlock.val(sessionStorageCheck[0].todo);
-      }
+    if (sessionStorageCheck.length > 0) {
+        todoBlock.val(sessionStorageCheck[0].task);
     }
 
     // Takes data and pushes it into sessionStorage and localStorage
@@ -70,6 +64,8 @@ $(document).ready(function () {
         time: $(this).siblings("div").text(),
         todo: $(this).siblings("textarea").val(),
       };
+      console.log(getTODO);
+      if (se)
       sessionStorage.push(getTODO);
       localStorage.setItem("workTODO", JSON.stringify(sessionStorage));
     });
