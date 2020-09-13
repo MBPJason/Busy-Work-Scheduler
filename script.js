@@ -50,7 +50,7 @@ $(document).ready(function () {
       todoBlock.addClass("future");
     }
 
-    // Setting variables to call into the function bello
+    // Setting variables to call into the function below
     var localStorageGrab = JSON.parse(localStorage.getItem("workTODO"));
     var sessionStorageCheck = sessionStorage.filter(
       (todo) => todo.time === slotHour
